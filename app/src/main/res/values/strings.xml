@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">DomoMeteo</string>
+
+    // ConfigurationActivity
     <string name="server_adress">Server address</string>
     <string name="port">Port</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="emptyFields">Password</string>
-
-    // ConfigurationActivity
-
+    <string name="save">Save</string>
 
 </resources>
