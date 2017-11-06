@@ -7,13 +7,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.example.txilla.domometeo.GetJSON;
 import com.example.txilla.domometeo.R;
 
+import java.util.Arrays;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+//{@link DashboardFragment.OnFragmentInteractionListener} interface
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DashboardFragment.OnFragmentInteractionListener} interface
+
  * to handle interaction events.
  * Use the {@link DashboardFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -28,6 +39,10 @@ public class DashboardFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private Unbinder unbinder;;
+
+    @BindView(R.id.temp) TextView temperature;
+    @BindView(R.id.lux) TextView light;
     //private OnFragmentInteractionListener mListener;
 
     public DashboardFragment() {
@@ -38,8 +53,7 @@ public class DashboardFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     *
      * @return A new instance of fragment DashboardFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -55,16 +69,27 @@ public class DashboardFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        //
+        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        unbinder = ButterKnife.bind(this, view);
+
+        List<TextView> iPracticeList = Arrays.asList(light,
+                temperature);
+
+        GetJSON getJSON = new GetJSON(getContext(), iPracticeList);
+
+        getJSON.execute();
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    /*// TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
