@@ -49,8 +49,9 @@ public class GetJSON extends AsyncTask<Void, Void, JSONObject> {
 
             SharedPreferences sharedPref = mContext.getSharedPreferences("configuration",Context.MODE_PRIVATE);
             String serverSaved = sharedPref.getString("serverAdress","noAdress");
+            String portSaved = sharedPref.getString("port","noPort");
 
-            String urlString ="http://" + serverSaved + ":8080/json.htm?type=devices&filter=all&used=true&order=Name";
+            String urlString ="http://" + serverSaved + ":" + portSaved + "/json.htm?type=devices&filter=all&used=true&order=Name";
 
             // Create url
             //

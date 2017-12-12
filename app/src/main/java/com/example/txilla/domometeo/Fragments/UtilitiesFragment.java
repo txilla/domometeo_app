@@ -7,10 +7,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.example.txilla.domometeo.Helpers.DataManager;
 import com.example.txilla.domometeo.R;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -22,6 +29,11 @@ import butterknife.Unbinder;
  * create an instance of this fragment.
  */
 public class UtilitiesFragment extends Fragment {
+
+    @BindView(R.id.serverAdressEditText) EditText serverAdress;
+    @BindView(R.id.portEditText) EditText port;
+    @BindView(R.id.pbConfig) ProgressBar pb;
+    @BindView(R.id.saveButton) Button buttonSave;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -70,8 +82,30 @@ public class UtilitiesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_utilities, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+
+
         return view;
     }
+
+    @OnClick(R.id.saveButton)
+    public void save() {
+        pb.setVisibility(View.VISIBLE);
+        buttonSave.setEnabled(false);
+        clickSave();
+    }
+
+    private void clickSave() {
+        String serverAdressString = serverAdress.getText().toString();
+        String portString = port.getText().toString();
+
+        DataManager.saveSharedPreferences(serverAdressString, portString, getContext());
+
+        Toast.makeText(getActivity(),"saved", Toast.LENGTH_LONG).show();
+        pb.setVisibility(View.INVISIBLE);
+        buttonSave.setEnabled(true);
+
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     /*public void onButtonPressed(Uri uri) {

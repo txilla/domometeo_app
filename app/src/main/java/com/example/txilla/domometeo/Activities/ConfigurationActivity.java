@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.txilla.domometeo.Activities.MainActivity;
+import com.example.txilla.domometeo.Helpers.DataManager;
 import com.example.txilla.domometeo.R;
 
 import butterknife.BindView;
@@ -37,12 +38,12 @@ public class ConfigurationActivity extends AppCompatActivity {
         SharedPreferences sharedPref = this.getSharedPreferences("configuration",Context.MODE_PRIVATE);
         String serverSaved = sharedPref.getString("serverAdress","noAdress");
         String portSaved = sharedPref.getString("port","noPort");
-        String usernameSaved = sharedPref.getString("username","noUsername");
-        String passwordSaved = sharedPref.getString("password","noPassword");
+        //String usernameSaved = sharedPref.getString("username","noUsername");
+        //String passwordSaved = sharedPref.getString("password","noPassword");
 
-        if ( !serverSaved.equals("noAdress") && !portSaved.equals("noPort")
-                && !usernameSaved.equals("noUsername") && !passwordSaved.equals("noPassword")) {
+        if ( !serverSaved.equals("noAdress") && !portSaved.equals("noPort")) {
             startActivity(new Intent(this, MainActivity.class));
+            finish();
         }
     }
 
@@ -85,22 +86,14 @@ public class ConfigurationActivity extends AppCompatActivity {
     private void saveData() {
 
         String serverAdressString = serverAdress.getText().toString();
+        String portString = port.getText().toString();
 
-        SharedPreferences sharedPref =
-                this.getSharedPreferences("configuration",
-                        Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-
-        //editor.putInt(getString(R.string.saved_high_score), newHighScore);
-        editor.putString("serverAdress",serverAdress.getText().toString());
-        editor.putString("port",port.getText().toString());
-        editor.putString("username",username.getText().toString());
-        editor.putString("password",password.getText().toString());
-        editor.commit();
+        DataManager.saveSharedPreferences(serverAdressString, portString, this);
 
         pb.setVisibility(View.INVISIBLE);
 
         startActivity(new Intent(this, MainActivity.class));
+        finish();
 
     }
 }
