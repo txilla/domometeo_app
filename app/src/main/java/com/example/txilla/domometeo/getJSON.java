@@ -1,6 +1,7 @@
 package com.example.txilla.domometeo;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
@@ -26,13 +27,15 @@ import java.util.List;
 public class GetJSON extends AsyncTask<Void, Void, JSONObject> {
 
     Context mContext;
-    List<TextView> tvList;
+    List<TextView> tvListValues;
+    List<TextView> tvListNames;
 
     /* Constructor */
-    public GetJSON(Context aContext, List<TextView> list) {
+    public GetJSON(Context aContext, List<TextView> list, List<TextView> namesList) {
 
         mContext = aContext;
-        tvList = list;
+        tvListValues = list;
+        tvListNames = namesList;
     }
 
     @Override
@@ -41,9 +44,13 @@ public class GetJSON extends AsyncTask<Void, Void, JSONObject> {
         JSONObject result = null;
 
 
+
         try {
 
-            String urlString ="http://192.168.100.91:8080/json.htm?type=devices&filter=all&used=true&order=Name";
+            SharedPreferences sharedPref = mContext.getSharedPreferences("configuration",Context.MODE_PRIVATE);
+            String serverSaved = sharedPref.getString("serverAdress","noAdress");
+
+            String urlString ="http://" + serverSaved + ":8080/json.htm?type=devices&filter=all&used=true&order=Name";
 
             // Create url
             //
@@ -121,8 +128,11 @@ public class GetJSON extends AsyncTask<Void, Void, JSONObject> {
                 for (int i = 0; i < jObject.length() - 1; i++) {
                     // Se lee el JSON
                     //String name = jObject.getJSONObject("" + i).getString("Name");
-                    String temp = jObject.getJSONArray("result").getJSONObject(i).getString("Data");
-                    tvList.get(i).setText(temp);
+                    String values = jObject.getJSONArray("result").getJSONObject(i).getString("Data");
+                    tvListValues.get(i).setText(": " + values);
+
+                    String names = jObject.getJSONArray("result").getJSONObject(i).getString("Name");
+                    tvListNames.get(i).setText(names);
 
                 }
             } catch (Exception ex) {

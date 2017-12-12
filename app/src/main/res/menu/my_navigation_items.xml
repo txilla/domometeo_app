@@ -2,13 +2,13 @@
 
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_search"
+    <item android:id="@+id/action_dash"
         android:title="Dashboard"
         android:icon="@drawable/ic_assignment_white_24dp" />
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/action_scenes"
         android:title="Scenes"
         android:icon="@drawable/ic_reorder_white_24dp" />
-    <item android:id="@+id/action_navigation"
+    <item android:id="@+id/action_utilities"
         android:title="Utilities"
         android:icon="@drawable/ic_settings_white_24dp" />
 </menu>
